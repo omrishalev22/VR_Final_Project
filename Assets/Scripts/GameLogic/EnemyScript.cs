@@ -25,6 +25,7 @@ public class EnemyScript : MonoBehaviour
     //for this to work both need colliders, one must have rigid body, and the zombie must have is trigger checked.
     void OnTriggerEnter(Collider col)
     {
+        Debug.Log(col);
         //first disable the zombie's collider so multiple collisions cannot occur
         GetComponent<CapsuleCollider>().enabled = false;
         //destroy the bullet
@@ -37,8 +38,8 @@ public class EnemyScript : MonoBehaviour
         //destroy this zombie in six seconds.
         Destroy(gameObject, 6);
         //instantiate a new zombie
-        Debug.Log(gameObject.name);
-        GameObject zombie = Instantiate(Resources.Load(gameObject.name, typeof(GameObject))) as GameObject;
+        string originalPrefabName = gameObject.name.Replace("(Clone)", "");
+        GameObject zombie = Instantiate(Resources.Load(originalPrefabName, typeof(GameObject))) as GameObject;
 
         //set the coordinates for a new vector 3
         float randomX = UnityEngine.Random.Range(-12f, 12f);
