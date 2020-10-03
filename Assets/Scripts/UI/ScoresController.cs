@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class ScoreController : MonoBehaviour
+public class ScoresController : MonoBehaviour
 {
-    public static ScoreController instance;
+    public static ScoresController instance;
     private List<HighscoreEntry> highscoreEntryList;
 
     private void Awake()
