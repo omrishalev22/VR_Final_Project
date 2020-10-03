@@ -23,6 +23,7 @@ public class HighscoreTable : MonoBehaviour
     {
         if (ScoresController.instance)
         {
+
             foreach (ScoresController.HighscoreEntry highscoreEntry in ScoresController.instance.GetHighscoreEntries(totalEntries))
             {
                 CreateHighscoreEntryTransform(highscoreEntry, entryContainer, highscoreEntryTransformList);

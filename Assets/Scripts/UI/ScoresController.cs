@@ -2,11 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 public class ScoresController : MonoBehaviour
 {
+    private static readonly string SCORES_PLAYER_PREFS_KEY = "scores";
     public static ScoresController instance;
     private List<HighscoreEntry> highscoreEntryList;
+
+    [System.Serializable]
+    public class HighscoreEntry
+    {
+        public int score;
+    }
+
+    [System.Serializable]
+    private class Highscores
+    {
+        public List<HighscoreEntry> scores;
+    }
 
     private void Awake()
     {
@@ -21,7 +36,15 @@ public class ScoresController : MonoBehaviour
     {
         if (highscoreEntryList == null)
         {
-            highscoreEntryList = new List<HighscoreEntry>();
+            // Load the scores from PlayerPrefs or creates a new scores list
+            if (PlayerPrefs.HasKey(SCORES_PLAYER_PREFS_KEY))
+            {
+                highscoreEntryList = JsonUtility.FromJson<Highscores>(PlayerPrefs.GetString(SCORES_PLAYER_PREFS_KEY)).scores;
+            } else
+            {
+                highscoreEntryList = new List<HighscoreEntry>();
+            }
+            
         }
     }
 
@@ -41,16 +64,12 @@ public class ScoresController : MonoBehaviour
         }
     }
 
-    public class HighscoreEntry
-    {
-        public int score;
-    }
-
     public void AddHighscoreEntry(int score)
     {
-        HighscoreEntry newEntry = new HighscoreEntry { score = score};
+        HighscoreEntry newEntry = new HighscoreEntry { score = score };
         highscoreEntryList.Add(newEntry);
         SortHighscoreEntryList(highscoreEntryList);
+        SaveScores();
 
     }
 
@@ -61,11 +80,7 @@ public class ScoresController : MonoBehaviour
 
     public void SaveScores()
     {
-        // Todo
-    }
-
-    public void LoadScores()
-    {
-        // Todo
+        PlayerPrefs.SetString(SCORES_PLAYER_PREFS_KEY, JsonUtility.ToJson(new Highscores { scores = highscoreEntryList }));
+        PlayerPrefs.Save();
     }
 }
