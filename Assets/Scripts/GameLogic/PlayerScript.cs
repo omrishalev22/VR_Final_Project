@@ -3,14 +3,10 @@ using System.Collections;
 
 public class PlayerScript : MonoBehaviour
 {
-
-    //declare GameObjects and create isShooting boolean.
-    private bool isShooting;
-
-    private Transform currentKnife;
+    private Transform currentAmmo;
 
     [SerializeField]
-    public Transform KnifeTemplate;
+    public Transform ammoTemplate;
 
     // Use this for initialization
     void Start()
@@ -18,28 +14,6 @@ public class PlayerScript : MonoBehaviour
 
         //only needed for IOS
         Application.targetFrameRate = 60;
-
-        //set isShooting bool to default of false
-        isShooting = false;
-    }
-
-    //Shoot function is IEnumerator so we can delay for seconds
-    IEnumerator Shoot(RaycastHit hit)
-    {
-
-        //set is shooting to true so we can't shoot continuosly
-        isShooting = true;
-
-        
-
-        //play the gun shot sound and gun animation
-        GetComponent<AudioSource>().Play();
-        // transform.GetComponent<Animation>().Play();
-
-        //wait for 1 second and set isShooting to false so we can shoot again
-        yield return new WaitForSeconds(1f);
-        isShooting = false;
-
     }
 
     // Update is called once per frame
@@ -59,11 +33,14 @@ public class PlayerScript : MonoBehaviour
                 }
             }
 
-            currentKnife = Instantiate(KnifeTemplate, Camera.main.transform.position, Quaternion.identity);
+            var ammoPosition = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y - 0.5f, Camera.main.transform.position.z);
+            currentAmmo = Instantiate(ammoTemplate, ammoPosition, Quaternion.identity);
+            GetComponent<AudioSource>().Play();
 
-            currentKnife.GetComponent<Rigidbody>().AddForce(myray.direction * 200f);
-            currentKnife.LookAt(hit.point);
-            Destroy(currentKnife.gameObject, 3);
+            var direction = new Vector3(myray.direction.x, myray.direction.y + 0.1f, myray.direction.z);
+            currentAmmo.GetComponent<Rigidbody>().AddForce(direction * 400f);
+            currentAmmo.LookAt(hit.point);
+            Destroy(currentAmmo.gameObject, 3);
         }
     }
 }
