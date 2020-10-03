@@ -38,7 +38,7 @@ public class PlayerScript : MonoBehaviour
             GetComponent<AudioSource>().Play();
 
             var direction = new Vector3(myray.direction.x, myray.direction.y + 0.1f, myray.direction.z);
-            currentAmmo.GetComponent<Rigidbody>().AddForce(direction * 400f);
+            currentAmmo.GetComponent<Rigidbody>().AddForce(direction * 900f);
             currentAmmo.LookAt(hit.point);
             Destroy(currentAmmo.gameObject, 3);
         }

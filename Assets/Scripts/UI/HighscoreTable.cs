@@ -8,7 +8,7 @@ public class HighscoreTable : MonoBehaviour
     private Transform entryContainer;
     private Transform entryTemplate;
     private List<Transform> highscoreEntryTransformList;
-    private int totalEntries = 10;
+    private int totalEntries = 5;
 
     private void Awake()
     {
