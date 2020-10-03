@@ -30,7 +30,7 @@ public class GameLogicScript : MonoBehaviour
             yield return new WaitForSeconds(1f);
             GameObject enemyToInstitate = enemiesArr[UnityEngine.Random.Range(0, enemiesArr.ToList().Count)];
 
-            var newSpritePosition = new Vector3(UnityEngine.Random.Range(0,17f), UnityEngine.Random.Range(1.5f,2.5f), UnityEngine.Random.Range(-7f, 7f));
+            var newSpritePosition = new Vector3(UnityEngine.Random.Range(0,17f), UnityEngine.Random.Range(2f,4f), UnityEngine.Random.Range(-7f, 7f));
             var newSprite = Instantiate(enemyToInstitate, newSpritePosition, Quaternion.identity);
             var agent = newSprite.AddComponent<NavMeshAgent>();
             newSprite.AddComponent<CollisionScript>();

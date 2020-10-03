@@ -32,7 +32,8 @@ public class CollisionScript : MonoBehaviour
             } 
             else if(spriteWasShot)
             {
-                Destroy(gameObject); // destory the actual sprite
+                Destroy(gameObject); // destory the  sprite
+                Destroy(col.gameObject); // destory the ammo
             }
         }
     }
