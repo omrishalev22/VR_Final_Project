@@ -20,7 +20,7 @@ public class PlayerScript : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.anyKeyDown)
         {
             Ray myray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2f, Screen.height / 2f,0f));
             RaycastHit hit;
