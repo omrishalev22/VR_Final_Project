@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.Scripts.GameLogic;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -33,6 +34,7 @@ public class InputController : MonoBehaviour
                 switch (m_hitted)
                 {
                     case "PlayButton":
+                        GameManager.isGameOver = false;
                         SceneManager.LoadScene(1);
                         break;
                     case "ExitButton":

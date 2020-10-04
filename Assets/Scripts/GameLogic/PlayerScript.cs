@@ -35,7 +35,8 @@ public class PlayerScript : MonoBehaviour
 
             var ammoPosition = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y - 0.5f, Camera.main.transform.position.z);
             currentAmmo = Instantiate(ammoTemplate, ammoPosition, Quaternion.identity);
-            GetComponent<AudioSource>().Play();
+            var audioData = GetComponent<AudioSource>();
+            audioData.Play(0);
 
             var direction = new Vector3(myray.direction.x, myray.direction.y + 0.1f, myray.direction.z);
             currentAmmo.GetComponent<Rigidbody>().AddForce(direction * 900f);

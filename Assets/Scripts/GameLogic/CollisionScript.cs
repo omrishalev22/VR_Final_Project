@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using Assets.Scripts.GameLogic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -18,7 +19,6 @@ public class CollisionScript : MonoBehaviour
     {
         score = 0;
         health = 10;
-        
     }
 
     public void SetHealth(bool increase)
@@ -49,9 +49,6 @@ public class CollisionScript : MonoBehaviour
     // col = the object which was bumped into the gameobject
     void OnTriggerEnter(Collider col)
     {
-        //Debug.Log($"col.gameObject.name{col.gameObject.name}");
-        //Debug.Log($"gameObject.name {gameObject.name}");
-
         var playerWasHit = gameObject.name.Contains("Player");
         var spriteWasShot = col.gameObject.name.Contains("ammo");
 
@@ -60,17 +57,20 @@ public class CollisionScript : MonoBehaviour
             // destory the sprite from a shot or from bumping into the player
             if(playerWasHit)
             {
+                var eatingSound = col.gameObject.GetComponent<AudioSource>(); // play eating sound
+                eatingSound.Play(0);
+
                 // In case the player got hit - if the object which hitted the player is an enemy, reduce health
                 // Otherwise - improve score
                 if (col.gameObject.name.Contains("Enemy"))
                 {
                     SetHealth(false);
-
                 }
                 else
                 {
                     SetScoreText(true);
                 }
+
                 Destroy(col.gameObject); // destory the sprite which bumped into the player
             } 
             else if(spriteWasShot)
@@ -96,6 +96,7 @@ public class CollisionScript : MonoBehaviour
             if (health == 0)
             {
                 Debug.Log("Game finished");
+                GameManager.isGameOver = true;
                 ScoresController.instance.AddHighscoreEntry(score);
                 SceneManager.LoadScene(2);
             }
