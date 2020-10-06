@@ -8,6 +8,9 @@ public class PlayerScript : MonoBehaviour
     [SerializeField]
     public Transform ammoTemplate;
 
+    [SerializeField]
+    public Transform spwanPoint;
+
     // Use this for initialization
     void Start()
     {
@@ -33,13 +36,16 @@ public class PlayerScript : MonoBehaviour
                 }
             }
 
-            var ammoPosition = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y - 0.5f, Camera.main.transform.position.z);
-            currentAmmo = Instantiate(ammoTemplate, ammoPosition, Quaternion.identity);
+            var cameraObject = GetComponentInParent<Transform>();
+            var ammoPosition = new Vector3(spwanPoint.position.x, spwanPoint.position.y, spwanPoint.position.z);
+            currentAmmo = Instantiate(ammoTemplate);
+            currentAmmo.position = spwanPoint.position;
+            currentAmmo.rotation = spwanPoint.rotation;
             var audioData = GetComponent<AudioSource>();
             audioData.Play(0);
 
-            var direction = new Vector3(myray.direction.x, myray.direction.y + 0.1f, myray.direction.z);
-            currentAmmo.GetComponent<Rigidbody>().AddForce(direction * 900f);
+            // var direction = new Vector3(myray.direction.x, myray.direction.y, myray.direction.z);
+            currentAmmo.GetComponent<Rigidbody>().AddForce(transform.forward * 700f);
             currentAmmo.LookAt(hit.point);
             Destroy(currentAmmo.gameObject, 3);
         }
