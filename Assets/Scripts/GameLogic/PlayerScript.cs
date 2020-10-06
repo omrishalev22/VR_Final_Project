@@ -14,7 +14,6 @@ public class PlayerScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
         //only needed for IOS
         Application.targetFrameRate = 60;
     }
@@ -36,15 +35,12 @@ public class PlayerScript : MonoBehaviour
                 }
             }
 
-            var cameraObject = GetComponentInParent<Transform>();
-            var ammoPosition = new Vector3(spwanPoint.position.x, spwanPoint.position.y, spwanPoint.position.z);
             currentAmmo = Instantiate(ammoTemplate);
             currentAmmo.position = spwanPoint.position;
             currentAmmo.rotation = spwanPoint.rotation;
             var audioData = GetComponent<AudioSource>();
             audioData.Play(0);
 
-            // var direction = new Vector3(myray.direction.x, myray.direction.y, myray.direction.z);
             currentAmmo.GetComponent<Rigidbody>().AddForce(transform.forward * 700f);
             currentAmmo.LookAt(hit.point);
             Destroy(currentAmmo.gameObject, 3);

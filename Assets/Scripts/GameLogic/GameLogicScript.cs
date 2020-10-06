@@ -20,7 +20,6 @@ public class GameLogicScript : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
 
         enemiesArr = Resources.LoadAll<GameObject>("Food");
-        Debug.Log($"count:{enemiesArr.ToList().Count}");
         StartCoroutine(GenerateSprites());
     }
 

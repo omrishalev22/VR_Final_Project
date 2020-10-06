@@ -77,19 +77,6 @@ public class CollisionScript : MonoBehaviour
             {
                 Destroy(gameObject); // destory the  sprite
                 Destroy(col.gameObject); // destory the ammo
-
-                //// In case the player shot an object, if the object is an enemy - improve score
-                //// Otherwise, reduce score (score can not be under zero)
-                //if (gameObject.name.Contains("Enemy"))
-                //{
-                //    SetScoreText(true);
-
-                //}
-                //else
-                //{
-                //    SetScoreText(false);
-                    
-                //}
             }
 
             // In case the player health is 0 - Stop the game and move to scores board

@@ -8,7 +8,6 @@ namespace Assets.Scripts.GameLogic
 {
     public static class GameManager
     {
-
         public  static bool isGameOver = false;
     }
 }
