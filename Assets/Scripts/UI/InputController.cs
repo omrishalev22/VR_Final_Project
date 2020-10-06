@@ -17,6 +17,11 @@ public class InputController : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
+    public void HowToPlayMenu()
+    {
+        SceneManager.LoadScene(3);
+    }
+
     public void ScoresMenu()
     {
         SceneManager.LoadScene(2);

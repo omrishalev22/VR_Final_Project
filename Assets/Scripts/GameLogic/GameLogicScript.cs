@@ -12,10 +12,13 @@ public class GameLogicScript : MonoBehaviour
     private NavMeshAgent agent;
     public List<GameObject> enemies;
     public GameObject[] enemiesArr;
+    private float currentEnemySpeed;
+    private float currentSpawnTime = 2f;
 
     // Use this for initialization
     void Start()
     {
+        currentEnemySpeed = 1f;
         goal = Camera.main.transform;
         agent = GetComponent<NavMeshAgent>();
 
@@ -23,18 +26,32 @@ public class GameLogicScript : MonoBehaviour
         StartCoroutine(GenerateSprites());
     }
 
+    void SetSpeedAndSpawnTime()
+    {
+        currentEnemySpeed += 0.04f;
+        currentSpawnTime -= 0.02f;
+        if (currentSpawnTime < 0.5f)
+        {
+            currentSpawnTime = 0.5f;
+        }
+    }
+
     IEnumerator GenerateSprites()
     {
         while (true)
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(currentSpawnTime);
             if (!GameManager.isGameOver)
             {
+                SetSpeedAndSpawnTime();
+
                 GameObject enemyToInstitate = enemiesArr[Random.Range(0, enemiesArr.ToList().Count)];
                 var newSpritePosition = new Vector3(Random.Range(0, 10f), 4f, Random.Range(-7f, 7f));
 
                 var newSprite = Instantiate(enemyToInstitate, newSpritePosition, Quaternion.identity);
                 var agent = newSprite.AddComponent<NavMeshAgent>();
+                agent.speed = currentEnemySpeed;
+
                 newSprite.AddComponent<CollisionScript>();
                 newSprite.AddComponent<Rigidbody>();
                 var audio = newSprite.AddComponent<AudioSource>();

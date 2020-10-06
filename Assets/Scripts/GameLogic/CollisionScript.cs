@@ -30,7 +30,11 @@ public class CollisionScript : MonoBehaviour
         {
             health -= 1;
         }
-        healthBar.GetComponent<Text>().text = new StringBuilder(2 * health).Insert(0, "+ ", health).ToString();
+
+        if (health > 0)
+        {
+            healthBar.GetComponent<Text>().text = new StringBuilder(2 * health).Insert(0, "+ ", health).ToString();
+        }
     }
 
     public void SetScoreText(bool increase)
